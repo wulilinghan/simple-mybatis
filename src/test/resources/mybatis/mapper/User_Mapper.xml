@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.b0x0.mybatis.test.mapper.UserMapper">
+
+    <select id="getUsernameById" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT userName
+        FROM user
+        where id = #{id}
+    </select>
+
+    <select id="getUserInfoById" parameterType="java.lang.String" resultType="top.b0x0.mybatis.test.po.User">
+        SELECT id, userId, userName, userHead, createTime
+        FROM user
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="existUser" resultType="java.lang.Integer">
+        SELECT count(1)
+        FROM user
+        where username = #{username,jdbcType=VARCHAR}
+          and password = #{password,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

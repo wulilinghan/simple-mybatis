@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.b0x0.mybatis.mapping.dtd.SampleUserMapper">
+
+    <cache eviction="FIFO" flushInterval="600000" size="512" readOnly="true"/>
+
+    <resultMap id="userMap" type="top.b0x0.mybatis.mapping.dtd.SampleUser">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="contact_email" property="contactEmail"/>
+        <result column="work_email" property="workEmail"/>
+        <result column="age" property="age"/>
+    </resultMap>
+
+    <sql id="user_columns">
+        id
+        ,username,password,contact_email,work_email,age
+    </sql>
+
+    <select id="queryUserById" parameterType="top.b0x0.mybatis.mapping.dtd.SampleUser" resultMap="userMap"
+            flushCache="false" useCache="true">
+        SELECT
+        <include refid="user_columns"/>
+        FROM user_info
+        <trim prefix="where" prefixOverrides="AND | OR" suffixOverrides="and">
+            <if test="null != id">
+                id = #{id}
+            </if>
+        </trim>
+    </select>
+
+</mapper>
